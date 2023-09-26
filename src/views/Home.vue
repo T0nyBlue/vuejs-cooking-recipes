@@ -12,19 +12,21 @@
         :to="{ name: 'byLetter', params: { letter } }"
         v-for="letter of letters"
         :key="letter"
-        >{{ letter }}</router-link
-      >
+        >{{ letter }}
+      </router-link>
     </div>
   </div>
 </template>
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import store from "../store";
 import axiosClient from "../axiosClient";
 
 const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const ingredients = ref([]);
 onMounted(async () => {
   const response = await axiosClient.get("/list.php?i=list");
+  ingredients.value = response.data;
   console.log(response.data);
 });
 </script>
